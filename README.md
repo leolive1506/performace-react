@@ -71,7 +71,7 @@
 ## Memo consegue evitar que o passo 1 aconteça caso nenhuma propriedade do componente seja alterada
     - Antes do 1 passo compara as props p ver se mudou algo, se não mudou, não cria uma nova versão do componente
 
-## Faz uma comparação shallow compare (comparação rasa)
+## Faz uma comparação **shallow compare** (comparação rasa)
 - Verifica a igualdade das informações
 - No js
     - Quando compara dois objetos ou dois arrays {} === {} retorna false
@@ -127,6 +127,39 @@ const totalPrice = useMemo(() => {
     }, 0)
 }, [results]) 
 ```
+
+# useCallback
+- Muito parecido com useMemo, mas usadso somente em uma situação
+    - Quando queremos memorizar uma função e não um valor
+    - Toda vez que um componenete é renderizado, todas as funções dentro dele são renderizadas de novo
+        - Vão ocupar um novo espaço na memória
+        - Não é pq uma função tem muito codigo que ela é pesada p js
+        - **É usada pela igualdade referencial, e não PELO PESO DA FUNÇÃO ou QUANTIDADE DE CÓDIGO**
+
+    - Se tem um pai com uma função passada p os filhos
+        - toda vez que o pai renderizar novamente, os filhos que dependem dessa função vão rendezeridos novamente pois o local na memória da função vai ser outro (igualdade referencial)
+    - Quando a casos assim, é importante usar useCallback
+        - O mesmo vale para context, importante escrever em formato useCallback
+- Sintaxe
+```ts
+// de
+async function addToWishlist(id: number) {
+console.log(id)
+}
+// para
+const addToWishlist = useCallback(async (id: number) => {
+    console.log(id)
+}, [array_de_depencias])
+```
+
+# Pq ao iterar um array, precisar da key
+    - Item unico do el
+    - É dificil do react comparar sem saber algo unico daquele componente
+    - Para react seria tudo diferente e iria recriar tudo do zero
+    - Com key, consegue perceber qual foi alterado, excluido
+        - Não pode pasar index
+            - Pois com id sabe exatamente qual é qual
+            - Com index, se mudar a ordem, o index muda e tudo é recalculado
 # Dicas gerais
 ## Javascript
 - Pure Functional Componets
