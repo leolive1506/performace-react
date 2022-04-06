@@ -152,6 +152,11 @@ const addToWishlist = useCallback(async (id: number) => {
 }, [array_de_depencias])
 ```
 
+# Formatação de dados
+## Não fazer cálculos ou formatações na hora de renderizar
+    - So fazer se for algo extremamente simples
+## Dar preferencia pra formatar dados assim que buscar eles e não no momento qeu vai exibir as informações
+
 # Pq ao iterar um array, precisar da key
     - Item unico do el
     - É dificil do react comparar sem saber algo unico daquele componente
@@ -160,6 +165,8 @@ const addToWishlist = useCallback(async (id: number) => {
         - Não pode pasar index
             - Pois com id sabe exatamente qual é qual
             - Com index, se mudar a ordem, o index muda e tudo é recalculado
+
+# Dynamic import (Code spliting)
 # Dicas gerais
 ## Javascript
 - Pure Functional Componets
