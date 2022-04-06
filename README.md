@@ -100,8 +100,33 @@ export const ProductItem = memo(ProductItemComponent, (prevProps, nextProps) => 
 })
 ```
 
+# useMemo
+## Quando utilizar
+- Evitar qeu algo que exige muito processamento seja refeito toda vez o componente renderizar
+- useMemo pode memorizar algo entre as renderizações do componente para que não precise ser refeito a ação do zero
+    - Ex: calculos pesados
+        - Memo memoriza pra não ter que fazer de novo a cada nova renderização
+    - Em calculos simples pode deixar mais lento
 
+- Outra ocasião de uso -> igualdade referencial
+    - Evitar que uma variavel ocupe um novo local na memória quando esta utilizando a variavel p ser repassada p um componente filho
+    - Repassa a informação a um componente filho
+        - Evita que a informação seja recriada do zero e evita algortimo de renderização comparar a mesma coisa pois vão estar ocupando mesma posição na memória
+- Sintaxe
+```ts
+const item = useMemo(() => {
+    return resultado 
+}, [array_de_depencias])
+```
 
+- Exemplo com calculo
+```ts
+const totalPrice = useMemo(() => {
+    return results.reduce((total, product) => {
+        return total + Number(product.price)
+    }, 0)
+}, [results]) 
+```
 # Dicas gerais
 ## Javascript
 - Pure Functional Componets
@@ -112,4 +137,4 @@ export const ProductItem = memo(ProductItemComponent, (prevProps, nextProps) => 
 
 - Quando compara dois objetos ou dois arrays {} === {} retorna false
     - Pois é feita uma **igualdade referencial**
-        - Não compara o conteúdo, compara se estão ocupanod mesma posição na memória
+        - Não compara o conteúdo, compara se estão ocupando mesma posição na memória
