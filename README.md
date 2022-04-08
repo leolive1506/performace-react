@@ -206,6 +206,55 @@ async function showFormattedDate() {
     format()
 }
 ```
+
+# Virtualização
+- Quando tem muita informação é pesado p navegador e react 
+    - E mt informação que as vezes nem vai ver
+- Em casos com muita informação, que so vai ver as informações quando ela dar scroll, pode trabalhar com virtualização
+    - Permite mostrar em tela somente os items que estão visiveis no navegador do usuários
+- Pode usar lib pra não ter qeu criar tudo do zero
+```sh
+yarn add react-virtualized
+yarn add @types/react-virtualized -D
+```
+## Usar
+```tsx
+import { List, AutoSizer, ListRowRenderer } from 'react-virtualized'
+// disso
+{results.map(product => {
+    return (
+        <ProductItem 
+            key={product.id} 
+            product={product} 
+            onAddToWishlist={onAddToWishlist}
+        />
+    )
+})}
+
+// para
+const rowRenderer: ListRowRenderer = ({ index, key, style }) => {
+    return (
+        // sempre ter uma div por volta do item qeu qeur mostrar
+        <div key={key} style={style}>
+            <ProductItem 
+                product={results[index]} 
+                onAddToWishlist={onAddToWishlist}
+            />
+        </div>
+    )
+}
+
+<List 
+    // definir tamanho da lista, ocupar todo espaço possível -> AutoSizer
+    height={500}
+    rowHeight={30} // linha
+    width={500}
+    // quantos items deixar pre carregados, tento pra cima e pra baixo
+    overscanRowCount={5}
+    rowCount={results.length} // quantos items tem na lista
+    rowRenderer={rowRenderer}
+/>
+```
 # Dicas gerais
 ## Javascript
 - Pure Functional Componets
