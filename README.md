@@ -167,6 +167,45 @@ const addToWishlist = useCallback(async (id: number) => {
             - Com index, se mudar a ordem, o index muda e tudo é recalculado
 
 # Dynamic import (Code spliting)
+- Importar arquivo / componente somente no momente que for utilizar
+- Tanto pra componentes tanto para funções
+- Diferença no bundle.js
+    - Onde tem todas funcionalidades dentro app
+    - Tem algums funcionalidades que so vão ser utilizadas caso o usuário tome alguma ação la dentro
+        - Ex: mostrar data formatada dentro de um modal se o user clicar p abrir modal
+            - Não precisa da funcionalidade caso o usuário não clique na funcionalidade
+## Usar
+- Importação no react app
+```ts
+import { lazy } from 'react'
+```
+
+- Importação no next
+```ts
+import dynamic from 'next/dynamic'
+```
+```tsx
+// exportar o tipo do componets para tipar
+const AddProductToWishlist = dynamic<AddProductToWishlistProps>(() => {
+    return import('./AddProductToWishlist') // export default
+    // segundo parametro opcional, mas quando tiver com internet lenta e bom ter um loading
+}, {
+    loading: () => <span>Carregando...</span>
+})
+const AddProductToWishlist = dynamic<AddProductToWishlistProps>(() => {
+    return import('./AddProductToWishlist').then(mod => mod.AddProductToWishlist) // so o export
+}, {
+    loading: () => <span>Carregando...</span>
+})
+```
+
+- Em funções
+```ts
+async function showFormattedDate() {
+    const { format } = await import('date-fns')
+    format()
+}
+```
 # Dicas gerais
 ## Javascript
 - Pure Functional Componets
