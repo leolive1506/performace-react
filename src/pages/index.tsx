@@ -7,6 +7,14 @@ type Results = {
   totalPrice: number
   data: any[]
 }
+
+interface ProductItemProps {
+  id: number
+  price: string
+  priceFormatted: string
+  title: string
+}
+
 const Home: NextPage = () => {
   const [search, setSearch] = useState('')
   const [results, setResults] = useState<Results>({
@@ -28,14 +36,14 @@ const Home: NextPage = () => {
       currency: 'BRL'
     })
 
-    const products = data.map(product => {
+    const products = data.map((product: ProductItemProps) => {
       return {
         ...product,
-        priceFormatted: formatter.format(product.price)
+        priceFormatted: formatter.format(Number(product.price))
       }
     })
 
-    const totalPrice = data.reduce((total, product) => {
+    const totalPrice = data.reduce((total: number, product: ProductItemProps) => {
           return total + Number(product.price)
       }, 0)
 

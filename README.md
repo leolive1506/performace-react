@@ -255,6 +255,25 @@ const rowRenderer: ListRowRenderer = ({ index, key, style }) => {
     rowRenderer={rowRenderer}
 />
 ```
+
+# Bundle Analyzer
+- Usado antes de jogar pra prod
+    - Analisar o  quanto as dependencias estão empactando no app
+- Ver oq ta pesando
+- Ex: libs grandes sendo mal utilizadas
+    - lodash
+- [Install next bundle analyzer](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)
+- Colocar dentro de next.config.js
+```js
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+module.exports = withBundleAnalyzer({})
+```
+
+```sh
+ANALYZE=true yarn build
+```
 # Dicas gerais
 ## Javascript
 - Pure Functional Componets
